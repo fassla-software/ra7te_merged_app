@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "724163833439",
+    "project_id": "ra7ti-cd141",
+    "storage_bucket": "ra7ti-cd141.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724163833439:android:12b4444f2e1f9b19c935ea",
+        "android_client_info": {
+          "package_name": "com.devu.hwilo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCES8AR4-OlzhwVpBXSm-nMw-WYbq0I2ZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724163833439:android:45aabaab35e05556c935ea",
+        "android_client_info": {
+          "package_name": "com.rahty.user.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCES8AR4-OlzhwVpBXSm-nMw-WYbq0I2ZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

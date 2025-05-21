@@ -1,0 +1,2 @@
+/Users/osamagamil/Documents/ra7ty-user-app/android/app/.cxx/Debug/28602vk4/x86/CMakeFiles/edit_cache.dir
+/Users/osamagamil/Documents/ra7ty-user-app/android/app/.cxx/Debug/28602vk4/x86/CMakeFiles/rebuild_cache.dir
