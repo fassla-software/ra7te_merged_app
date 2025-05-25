@@ -93,7 +93,7 @@ class _ChartWidgetState extends State<ChartWidget> {
         break;
     }
 
-    return SideTitleWidget(axisSide: meta.axisSide, child: text);
+    return SideTitleWidget(meta: meta, child: text);
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
@@ -111,7 +111,7 @@ class _ChartWidgetState extends State<ChartWidget> {
     }
 
     return SideTitleWidget(
-        axisSide: meta.axisSide,
+        meta: meta,
         child: Text(value,
             style: textRobotoRegular.copyWith(
                 fontSize: 10,

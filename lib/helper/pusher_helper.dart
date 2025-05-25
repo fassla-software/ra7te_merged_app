@@ -21,8 +21,9 @@ class PusherHelper {
           ? 'wss'
           : 'ws',
       key: Get.find<ConfigController>().config!.webSocketKey ?? '',
-      port: int.parse(
-          Get.find<ConfigController>().config?.webSocketPort ?? '6001'),
+      port: int.tryParse(
+              Get.find<ConfigController>().config?.webSocketPort ?? '') ??
+          6001,
     );
 
     pusherClient = PusherChannelsClient.websocket(

@@ -1,0 +1,1 @@
+/Users/osamagamil/Documents/ra7ty-user-app/build/app/intermediates/cxx/RelWithDebInfo/695b1x24/obj/arm64-v8a

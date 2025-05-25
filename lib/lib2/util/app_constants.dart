@@ -136,22 +136,22 @@ class AppConstants {
       '/api/driver/config/predefined-question-answer-list';
 
   // Shared Key
-  static const String theme = 'theme';
-  static const String token = 'token';
-  static const String deviceToken = 'deviceToken';
-  static const String countryCode = 'country_code';
-  static const String languageCode = 'language_code';
-  static const String haveOngoingRides = 'have_ongoing_rides';
-  static const String cartList = 'cart_list';
-  static const String userPassword = 'user_password';
-  static const String userAddress = 'user_address';
-  static const String userNumber = 'user_number';
-  static const String loginCountryCode = 'login_country_code';
-  static const String searchAddress = 'search_address';
-  static const String localization = 'X-Localization';
-  static const String topic = 'notify';
-  static const String zoneId = 'zoneId';
-  static const String lastRefund = 'refund';
+  static const String theme = 'theme2';
+  static const String token = 'token2';
+  static const String deviceToken = 'deviceToken2';
+  static const String countryCode = 'country_code2';
+  static const String languageCode = 'language_code2';
+  static const String haveOngoingRides = 'have_ongoing_rides2';
+  static const String cartList = 'cart_list2';
+  static const String userPassword = 'user_password2';
+  static const String userAddress = 'user_address2';
+  static const String userNumber = 'user_number2';
+  static const String loginCountryCode = 'login_country_code2';
+  static const String searchAddress = 'search_address2';
+  static const String localization = 'X-Localization2';
+  static const String topic = 'notify2';
+  static const String zoneId = 'zoneId2';
+  static const String lastRefund = 'refund2';
 
   static List<LanguageModel> languages = [
     LanguageModel(
