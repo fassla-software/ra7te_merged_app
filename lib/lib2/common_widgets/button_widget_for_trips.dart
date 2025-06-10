@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/lib2/util/dimensions.dart';
 import 'package:ride_sharing_user_app/lib2/util/styles.dart';
 
-class ButtonWidget extends StatelessWidget {
+class ButtonWidgetForTrips extends StatelessWidget {
   final Function()? onPressed;
   final String buttonText;
   final bool transparent;
@@ -18,7 +18,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? borderColor;
   final Color? textColor;
   final Color? backgroundColor;
-  const ButtonWidget({
+  const ButtonWidgetForTrips({
     super.key,
     this.onPressed,
     required this.buttonText,
@@ -78,7 +78,9 @@ class ButtonWidget extends StatelessWidget {
                   Text(buttonText,
                       textAlign: TextAlign.center,
                       style: textBold.copyWith(
-                        color: Theme.of(context).colorScheme.tertiaryFixed,
+                        color: Get.isDarkMode
+                            ? Theme.of(context).primaryColorDark
+                            : Theme.of(context).primaryColor,
                         fontSize: fontSize ?? Dimensions.fontSizeLarge,
                       )),
                 ]),

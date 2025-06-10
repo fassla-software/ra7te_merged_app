@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/lib2/common_widgets/button_widget_for_trips.dart';
 import 'package:ride_sharing_user_app/lib2/features/dashboard/screens/dashboard_screen.dart';
 import 'package:ride_sharing_user_app/lib2/features/map/controllers/map_controller.dart';
 import 'package:ride_sharing_user_app/lib2/features/ride/controllers/ride_controller.dart';
@@ -36,7 +37,9 @@ class EndTripWidget extends StatelessWidget {
                 TextSpan(
                     text: 'your_destination'.tr,
                     style: textMedium.copyWith(
-                        color: Theme.of(context).primaryColor))
+                        color: !Get.isDarkMode
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColorDark))
               ]))),
           Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -49,7 +52,7 @@ class EndTripWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                      child: ButtonWidget(
+                      child: ButtonWidgetForTrips(
                           buttonText: 'continue'.tr,
                           showBorder: true,
                           transparent: true,

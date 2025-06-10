@@ -26,6 +26,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:724163833439:android:b525d7de01b9abdec935ea",
+        "android_client_info": {
+          "package_name": "com.rahty.driver.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCES8AR4-OlzhwVpBXSm-nMw-WYbq0I2ZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:724163833439:android:45aabaab35e05556c935ea",
         "android_client_info": {
           "package_name": "com.rahty.user.app"

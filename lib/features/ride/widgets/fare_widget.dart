@@ -10,11 +10,11 @@ class FareWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text(value, style: textBold.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeLarge)),
+      Text(value, style: textBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
       const SizedBox(height: Dimensions.paddingSizeThree),
-
-      Text(title, style: textRobotoRegular.copyWith(color: Theme.of(context).hintColor,fontSize: Dimensions.fontSizeDefault)),
-
+      Text(title,
+          style:
+              textRobotoRegular.copyWith(fontSize: Dimensions.fontSizeDefault)),
     ]);
   }
 }

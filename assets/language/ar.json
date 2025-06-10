@@ -735,8 +735,9 @@
   "refund_reason": "سبب استرداد الأموال:",
   "refund_details": "تفاصيل استرداد الأموال",
   "customer_note": "ملاحظة العميل:",
-  "enter_valid_contact_number": "أدخل رقم اتصال صالح"
-
+  "enter_valid_contact_number": "أدخل رقم اتصال صالح",
+  "female": "أنثى",
+  "male": "ذكر"
 
 
 

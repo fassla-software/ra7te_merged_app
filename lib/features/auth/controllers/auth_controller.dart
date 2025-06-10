@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ride_sharing_user_app/data/api_checker.dart';
@@ -31,6 +33,12 @@ class AuthController extends GetxController implements GetxService {
   String get verificationCode => _verificationCode;
   bool get isActiveRememberMe => _isActiveRememberMe;
   bool showNavigationBar = true;
+  String selectedGender = 'male'; // Default to male
+
+  void setSelectedGender(String gender) {
+    selectedGender = gender;
+    update();
+  }
 
   void toggleNavigationBar() {
     showNavigationBar = false;
@@ -293,6 +301,18 @@ class AuthController extends GetxController implements GetxService {
     } else {
       _isLoading = false;
       showCustomSnackBar('invalid_number'.tr);
+    }
+    update();
+  }
+
+  Future<void> deleteDeviceToken(
+      VoidCallback onSuccess, VoidCallback onError) async {
+    Response? response = await authServiceInterface.deleteDeviceToken();
+    if (response!.statusCode == 200) {
+      _isOtpSending = false;
+      onSuccess();
+    } else {
+      onError();
     }
     update();
   }

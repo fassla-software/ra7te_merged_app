@@ -73,7 +73,6 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                               Text(
                                 'your_pickup_time_is_continuing'.tr,
                                 style: textRegular.copyWith(
-                                  color: Theme.of(context).primaryColor,
                                   fontSize: Dimensions.fontSizeDefault,
                                 ),
                               ),
@@ -186,8 +185,6 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                                           Row(children: [
                                             Icon(
                                               Icons.star_rate_rounded,
-                                              color: Theme.of(Get.context!)
-                                                  .primaryColor,
                                               size: Dimensions.iconSizeMedium,
                                             ),
                                             Text(
@@ -306,7 +303,6 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                                   Text(
                                     'payment_method'.tr,
                                     style: textRegular.copyWith(
-                                      color: Theme.of(context).primaryColor,
                                       fontSize: Dimensions.fontSizeDefault,
                                     ),
                                   ),
@@ -362,8 +358,7 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                                           ?.replaceAll(RegExp('[\\W_]+'), ' ')
                                           .capitalize ??
                                       'cash'.tr,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
+                                  style: TextStyle(),
                                 )
                               ]),
                           const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -381,7 +376,6 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                                   Text(
                                     'fare_price'.tr,
                                     style: textRegular.copyWith(
-                                      color: Theme.of(context).primaryColor,
                                       fontSize: Dimensions.fontSizeDefault,
                                     ),
                                   ),
@@ -434,7 +428,6 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                                     ),
                                     style: textRobotoBold.copyWith(
                                       fontSize: Dimensions.fontSizeSmall,
-                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                 )
@@ -455,8 +448,7 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                             rideController.tripDetail!.type == "ride_request"
                                 ? 'cancel_ride'.tr
                                 : 'cancel_parcel'.tr,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
+                            style: TextStyle(),
                           ),
                           dismissThresholds: 0.5,
                           dismissible: false,
@@ -504,7 +496,6 @@ class _RideAcceptedWidgetState extends State<RideAcceptedWidget> {
                           Text(
                             'your_pickup_time_is_continuing'.tr,
                             style: textSemiBold.copyWith(
-                              color: Theme.of(context).primaryColor,
                               fontSize: Dimensions.fontSizeSmall,
                             ),
                           ),

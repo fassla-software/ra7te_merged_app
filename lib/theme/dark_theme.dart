@@ -21,7 +21,7 @@ ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme.dark(
     primary: Color(0xFFc9a236),
     error: Color(0xFFFF6767),
-    surface: Color(0xFFF3F3F3),
+    surface: Color.fromARGB(255, 255, 255, 255),
     secondary: Color(0xFFc9a236),
     tertiary: Color(0xFFc9a236),
     tertiaryContainer: Color(0xFFC98B3E),
@@ -37,7 +37,7 @@ ThemeData darkTheme = ThemeData(
     onSurface: Color(0xFFFFE6AD),
     onPrimary: Color(0xFFc9a236),
     inverseSurface: Color(0xFF0148AF),
-    surfaceContainer: Color(0xFF0094FF),
+    surfaceContainer: Color.fromARGB(255, 248, 248, 248),
     secondaryFixedDim: Color(0xff808080),
   ),
   textButtonTheme: TextButtonThemeData(

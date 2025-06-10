@@ -21,6 +21,7 @@ import 'package:ride_sharing_user_app/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:restart_app/restart_app.dart';
 
 import 'firebase_options.dart';
 
@@ -64,7 +65,6 @@ Future<void> main() async {
     languages = await di2.init();
     await NotificationHelper2.initialize(flutterLocalNotificationsPlugin);
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler2);
-    await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
 
     // Add any other driver app initialization here
   }
@@ -130,9 +130,17 @@ class RestartWidget extends StatefulWidget {
 
   const RestartWidget({Key? key, required this.child}) : super(key: key);
 
-  static void restartApp(BuildContext context, Widget newApp) {
+  static Future<void> restartApp(BuildContext context, Widget newApp) async {
     final state = context.findAncestorStateOfType<_RestartWidgetState>();
     state?.restartApp(newApp);
+    await Restart.restartApp(
+      /// In Web Platform, Fill webOrigin only when your new origin is different than the app's origin
+      // webOrigin: 'http://example.com',
+
+      // Customizing the restart notification message (only needed on iOS)
+      notificationTitle: 'Restarting App',
+      notificationBody: 'Please tap here to open the app again.',
+    );
   }
 
   @override

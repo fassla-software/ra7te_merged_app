@@ -433,7 +433,8 @@ class ProfileController extends GetxController implements GetxService {
             onYesPressed: () async {
               Get.back();
               await Geolocator.requestPermission();
-              _checkPermission(callback);
+              await Geolocator.openAppSettings();
+              // _checkPermission(callback);
             },
             icon: Images.logo,
           ),

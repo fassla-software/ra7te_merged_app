@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/lib2/common_widgets/button_widget_for_trips.dart';
 import 'package:ride_sharing_user_app/lib2/features/auth/controllers/auth_controller.dart';
 import 'package:ride_sharing_user_app/lib2/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/lib2/helper/pusher_helper.dart';
@@ -84,8 +85,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                     color: Theme.of(Get.context!).cardColor,
                     borderRadius:
                         BorderRadius.circular(Dimensions.paddingSizeDefault),
-                    border: Border.all(
-                        color: Theme.of(Get.context!).primaryColor, width: .35),
+                    border: Border.all(width: .35),
                     boxShadow: [
                       BoxShadow(
                         color:
@@ -100,8 +100,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                     if (!fromParcel)
                       Text(
                         'swipe_to_reject'.tr,
-                        style: textRegular.copyWith(
-                            color: Theme.of(Get.context!).primaryColor),
+                        style: textRegular.copyWith(),
                       ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -111,8 +110,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                           children: [
                             Text(
                               'trip_type'.tr,
-                              style: textRegular.copyWith(
-                                  color: Theme.of(Get.context!).primaryColor),
+                              style: textRegular.copyWith(),
                             ),
                             const SizedBox(
                                 width: Dimensions.paddingSizeExtraSmall),
@@ -156,15 +154,13 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                             child: Row(children: [
                               Icon(
                                 Icons.arrow_forward_outlined,
-                                color: Theme.of(Get.context!).primaryColor,
                                 size: Dimensions.iconSizeMedium,
                               ),
                               const SizedBox(
                                   width: Dimensions.paddingSizeSmall),
                               Text(
                                 '${Get.find<RideController>().matchedMode!.duration!} ${'pickup_time'.tr}',
-                                style: textRegular.copyWith(
-                                    color: Theme.of(Get.context!).primaryColor),
+                                style: textRegular.copyWith(),
                               ),
                             ]),
                           )
@@ -330,7 +326,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                                       size: 40.0)
                                   : Row(children: [
                                       Expanded(
-                                          child: ButtonWidget(
+                                          child: ButtonWidgetForTrips(
                                         buttonText: (bidOn &&
                                                 rideRequest.type != 'parcel' &&
                                                 rideRequest.fareBiddings !=
@@ -457,8 +453,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                   color: Theme.of(Get.context!).cardColor,
                   borderRadius:
                       BorderRadius.circular(Dimensions.paddingSizeDefault),
-                  border: Border.all(
-                      color: Theme.of(Get.context!).primaryColor, width: .35),
+                  border: Border.all(width: .35),
                   boxShadow: [
                     BoxShadow(
                       color:
@@ -472,8 +467,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                 child: Column(children: [
                   Text(
                     'swipe_to_reject'.tr,
-                    style: textRegular.copyWith(
-                        color: Theme.of(Get.context!).primaryColor),
+                    style: textRegular.copyWith(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -483,8 +477,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                         children: [
                           Text(
                             'trip_type'.tr,
-                            style: textRegular.copyWith(
-                                color: Theme.of(Get.context!).primaryColor),
+                            style: textRegular.copyWith(),
                           ),
                           const SizedBox(
                               width: Dimensions.paddingSizeExtraSmall),
@@ -500,7 +493,9 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                             ),
                             child: Text(rideRequest.type!.tr,
                                 style: textRegular.copyWith(
-                                    color: Theme.of(Get.context!).cardColor)),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .tertiaryFixed)),
                           ),
                         ]),
                   ),
@@ -533,7 +528,7 @@ class CustomerRideRequestCardWidget extends StatelessWidget {
                               color: Theme.of(context).primaryColor, size: 40.0)
                           : Row(children: [
                               Expanded(
-                                  child: ButtonWidget(
+                                  child: ButtonWidgetForTrips(
                                 buttonText: (bidOn &&
                                         rideRequest.type != 'parcel' &&
                                         rideRequest.fareBiddings != null &&

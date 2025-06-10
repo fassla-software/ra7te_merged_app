@@ -44,7 +44,7 @@ void showCustomSnackBar(String message,
             Text(message,
                 style: textMedium.copyWith(
                     color: Get.isDarkMode
-                        ? Theme.of(Get.context!).textTheme.bodySmall!.color
+                        ? Theme.of(Get.context!).textTheme.titleMedium!.color
                         : Colors.white)),
             subMessage != null
                 ? Text(

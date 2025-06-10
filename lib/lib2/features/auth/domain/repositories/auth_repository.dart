@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -30,6 +32,7 @@ class AuthRepository implements AuthRepositoryInterface {
       {required SignUpBody signUpBody,
       XFile? profileImage,
       List<MultipartBody>? identityImage}) async {
+    log('--------SignUpBody---------- ${signUpBody.toJson()}');
     return await apiClient.postMultipartData(
         AppConstants.registration,
         signUpBody.toJson(),

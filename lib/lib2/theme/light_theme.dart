@@ -72,6 +72,7 @@ ThemeData lightTheme = ThemeData(
     inverseSurface: Color(0xFF0148AF),
     surfaceContainer: Color(0xFF0094FF),
     secondaryFixedDim: Color(0xff808080),
+    tertiaryFixed: Color.fromARGB(255, 255, 255, 255),
   ),
   textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(foregroundColor: const Color(0xFF14B19E))),

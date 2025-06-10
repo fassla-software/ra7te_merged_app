@@ -7,6 +7,7 @@ import 'package:ride_sharing_user_app/common_widgets/button_widget.dart';
 import 'package:ride_sharing_user_app/common_widgets/custom_text_field.dart';
 import 'package:ride_sharing_user_app/features/auth/controllers/auth_controller.dart';
 import 'package:ride_sharing_user_app/features/auth/domain/models/sign_up_body.dart';
+import 'package:ride_sharing_user_app/features/auth/widgets/custom_gender_drop_down_menu.dart';
 import 'package:ride_sharing_user_app/features/auth/widgets/test_field_title.dart';
 import 'package:ride_sharing_user_app/features/splash/controllers/config_controller.dart';
 import 'package:ride_sharing_user_app/helper/display_helper.dart';
@@ -174,6 +175,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     prefixHeight: 70,
                   ),
                 ],
+
+                // Gender dropdown
+                TextFieldTitle(title: 'gender'.tr),
+                CustomGenderDropDownMenu(),
+
                 const SizedBox(height: Dimensions.paddingSizeDefault * 3),
                 authController.isLoading
                     ? Center(
@@ -224,6 +230,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             authController.register(SignUpBody(
                                 fName: fName,
                                 lName: lName,
+                                gender: authController.selectedGender == 'male'
+                                    ? Gender.male
+                                    : Gender.female,
                                 phone: authController.countryDialCode + phone,
                                 password: password,
                                 confirmPassword: confirmPassword,

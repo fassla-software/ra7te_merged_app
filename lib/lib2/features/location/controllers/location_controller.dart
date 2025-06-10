@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -177,6 +178,7 @@ class LocationController extends GetxController implements GetxService {
 
   Future<bool> checkPermission(Function onTap) async {
     LocationPermission permission = await Geolocator.checkPermission();
+    print('permission==> $permission');
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission != LocationPermission.denied &&
@@ -186,43 +188,84 @@ class LocationController extends GetxController implements GetxService {
         return true;
       } else if (permission == LocationPermission.deniedForever &&
           GetPlatform.isIOS) {
+        print('Showing dialog for iOS deniedForever');
         Get.dialog(
-            ConfirmationDialogWidget(
-                description: 'you_have_to_allow'.tr,
-                fromOpenLocation: true,
-                onYesPressed: () async {
-                  await Geolocator.openAppSettings();
+          AlertDialog(
+            title: Text('Location Permission Required'),
+            content: Text(
+                'Please enable location permissions in your device settings to continue.'),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child: Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
                   Get.back();
+                  await Geolocator.openAppSettings();
                 },
-                icon: Images.logo),
-            barrierDismissible: false);
+                child: Text('Open Settings'),
+              ),
+            ],
+          ),
+          barrierDismissible: false,
+        );
       }
     } else if ((permission == LocationPermission.denied ||
+            permission == LocationPermission.whileInUse ||
             permission == LocationPermission.deniedForever) &&
-        GetPlatform.isAndroid) {
+        (GetPlatform.isAndroid)) {
+      print('Showing dialog for Android');
       Get.dialog(
-          ConfirmationDialogWidget(
-              description: 'you_have_to_allow'.tr,
-              fromOpenLocation: true,
-              onYesPressed: () async {
+        AlertDialog(
+          title: Text('Location Permission Required'),
+          content: Text(
+              'Please enable location permissions in your device settings to continue.'),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
                 Get.back();
                 await Geolocator.openAppSettings();
               },
-              icon: Images.logo),
-          barrierDismissible: false);
+              child: Text('Open Settings'),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
     } else if ((permission == LocationPermission.denied ||
+            permission == LocationPermission.whileInUse ||
             permission == LocationPermission.deniedForever) &&
         GetPlatform.isIOS) {
+      print('Showing dialog for iOS');
       Get.dialog(
-          ConfirmationDialogWidget(
-              description: 'you_have_to_allow'.tr,
-              fromOpenLocation: true,
-              onYesPressed: () async {
-                await Geolocator.openAppSettings();
+        AlertDialog(
+          title: Text('Location Permission Required'),
+          content: Text(
+              'Please enable location permissions in your device settings to continue.'),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
                 Get.back();
+                await Geolocator.openAppSettings();
               },
-              icon: Images.logo),
-          barrierDismissible: false);
+              child: Text('Open Settings'),
+            ),
+          ],
+        ),
+        barrierDismissible: false,
+      );
+    } else if (permission == LocationPermission.always) {
+      onTap();
+      return true;
     } else {
       onTap();
       return true;

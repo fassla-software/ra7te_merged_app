@@ -28,16 +28,17 @@ class StayOnlineWidget extends StatelessWidget {
                   top: Get.height * 0.005, left: Get.width * 0.03),
               height: 80,
               width: 100,
-              child: const WifiAnimations()),
+              child: WifiAnimations(
+                color: Get.isDarkMode ? Colors.white : Colors.grey,
+              )),
           Padding(
               padding: const EdgeInsets.only(
                   top: Dimensions.paddingSizeDefault,
                   bottom: Dimensions.paddingSizeExtraSmall),
               child: Text(
                   isOnline ? 'stay_online'.tr : "you_are_in_offline_mode".tr,
-                  style: textBold.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: Dimensions.fontSizeLarge))),
+                  style:
+                      textBold.copyWith(fontSize: Dimensions.fontSizeLarge))),
           Text(
               isOnline
                   ? 'customer_are_surrounding_you'.tr

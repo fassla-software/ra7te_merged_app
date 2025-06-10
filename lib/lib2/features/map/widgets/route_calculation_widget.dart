@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:ride_sharing_user_app/lib2/common_widgets/button_widget_for_trips.dart';
 import 'package:ride_sharing_user_app/lib2/util/dimensions.dart';
 import 'package:ride_sharing_user_app/lib2/util/images.dart';
 import 'package:ride_sharing_user_app/lib2/util/styles.dart';
@@ -53,15 +54,10 @@ class RouteCalculationWidget extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSecondary
-                            .withOpacity(.085),
                       ),
                       child: Text(
                         '${hour.toString().padLeft(2, '0')}:${min.toString().padLeft(2, '0')}:${sec.toString().padLeft(2, '0')}',
-                        style: textBold.copyWith(
-                            color: Theme.of(context).primaryColor),
+                        style: textBold.copyWith(),
                       ),
                     ),
                     const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -113,13 +109,10 @@ class RouteCalculationWidget extends StatelessWidget {
                             rideController.matchedMode!.distanceText!
                                 .replaceAll(" km", ''),
                             style: textSemiBold.copyWith(
-                              color: Theme.of(context).primaryColor,
                               fontSize: Dimensions.fontSizeLarge,
                             ),
                           ),
-                          Text('km',
-                              style: textRegular.copyWith(
-                                  color: Theme.of(context).primaryColor)),
+                          Text('km', style: textRegular.copyWith()),
                         ],
                       ),
                     ),
@@ -129,8 +122,7 @@ class RouteCalculationWidget extends StatelessWidget {
                         top: (rideController.matchedMode != null) ? 10 : 80),
                     child: Text(
                       'destination'.tr,
-                      style: textMedium.copyWith(
-                          color: Theme.of(context).primaryColor),
+                      style: textMedium.copyWith(),
                     ),
                   ),
                 ]),
@@ -140,7 +132,7 @@ class RouteCalculationWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(
                     top: Dimensions.paddingSizeExtraLarge),
-                child: ButtonWidget(
+                child: ButtonWidgetForTrips(
                   buttonText: rideController.tripDetail!.isPaused!
                       ? 'resume_trip_from_here'.tr
                       : 'pause_trip_for_a_moment'.tr,

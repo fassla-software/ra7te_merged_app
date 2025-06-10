@@ -23,10 +23,15 @@ class ChatService implements ChatServiceInterface {
   }
 
   @override
-  Future sendMessage(String message, String channelID, String tripId,
-      List<MultipartBody> file, PlatformFile? platformFile) {
+  Future sendMessage(
+      String message,
+      String channelID,
+      String tripId,
+      List<MultipartBody> file,
+      PlatformFile? platformFile,
+      PlatformFile? voicePlatformFile) {
     return chatRepositoryInterface.sendMessage(
-        message, channelID, tripId, file, platformFile);
+        message, channelID, tripId, file, platformFile, voicePlatformFile);
   }
 
   @override

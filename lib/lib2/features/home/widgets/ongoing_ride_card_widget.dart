@@ -84,7 +84,6 @@ class OngoingRideCardWidget extends StatelessWidget {
                                     Text(
                                       '$tripDate $suffix',
                                       style: textBold.copyWith(
-                                          color: Theme.of(context).primaryColor,
                                           fontSize: Dimensions.fontSizeLarge),
                                     ),
                                     Text(

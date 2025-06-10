@@ -1,8 +1,11 @@
+import 'package:ride_sharing_user_app/lib2/features/auth/domain/models/signup_body.dart';
+
 class SignUpBody {
   String? fName;
   String? lName;
   String? phone;
   String? email;
+  Gender? gender;
   String? password;
   String? confirmPassword;
   String? address;
@@ -10,10 +13,15 @@ class SignUpBody {
   String? identificationNumber;
   String? referralCode;
 
-
-
-  SignUpBody({this.fName, this.lName, this.phone, this.email='',
-    this.password, this.confirmPassword, this.referralCode});
+  SignUpBody(
+      {this.fName,
+      this.lName,
+      this.phone,
+      this.gender,
+      this.email = '',
+      this.password,
+      this.confirmPassword,
+      this.referralCode});
 
   SignUpBody.fromJson(Map<String, dynamic> json) {
     fName = json['first_name'];
@@ -22,8 +30,7 @@ class SignUpBody {
     password = json['password'];
     confirmPassword = json['confirm_password'];
     referralCode = json['referral_code'];
-
-
+    gender = json['gender'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +41,9 @@ class SignUpBody {
     data['password'] = password;
     data['confirm_password'] = confirmPassword;
     data['referral_code'] = referralCode;
+    data['gender'] = gender?.name;
     return data;
   }
 }
+
+enum Gender { male, female }

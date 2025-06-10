@@ -33,7 +33,7 @@ class TypeButtonWidget extends StatelessWidget {
               border: Border.all(
                   width: .5,
                   color: index == selectedIndex
-                      ? Theme.of(context).colorScheme.onSecondary
+                      ? Theme.of(context).colorScheme.tertiaryFixed
                       : Theme.of(context).primaryColor),
               color: index == selectedIndex
                   ? Theme.of(context).primaryColor

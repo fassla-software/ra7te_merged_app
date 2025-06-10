@@ -25,7 +25,7 @@ class ProfileTypeButtonWidget extends StatelessWidget {
               border: Border.all(
                   width: .5,
                   color: index == rideController.profileTypeIndex
-                      ? Theme.of(context).colorScheme.onSecondary
+                      ? Theme.of(context).colorScheme.tertiaryFixed
                       : Theme.of(context).primaryColor),
               color: index == rideController.profileTypeIndex
                   ? Theme.of(context).primaryColor

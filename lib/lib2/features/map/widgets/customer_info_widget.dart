@@ -38,7 +38,7 @@ class CustomerInfoWidget extends StatelessWidget {
                     radius: 28,
                     percent: .75,
                     lineWidth: 1,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                     progressColor: Theme.of(Get.context!).primaryColor,
                   )),
               ClipRRect(
@@ -59,12 +59,14 @@ class CustomerInfoWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (customer!.firstName != null && customer!.lastName != null)
-                    Text('${customer!.firstName!} ${customer!.lastName!}'),
+                    Text(
+                      '${customer!.firstName!} ${customer!.lastName!}',
+                      style: TextStyle(),
+                    ),
                   if (customerRating != null && customerRating!.isNotEmpty)
                     Row(children: [
                       Icon(
                         Icons.star_rate_rounded,
-                        color: Theme.of(Get.context!).primaryColor,
                         size: Dimensions.iconSizeMedium,
                       ),
                       Text(double.parse(customerRating!).toStringAsFixed(1),
@@ -77,14 +79,12 @@ class CustomerInfoWidget extends StatelessWidget {
                 : Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                     Text(
                       'estimated_fare'.tr,
-                      style: textMedium.copyWith(
-                          color: Theme.of(Get.context!).primaryColor),
+                      style: textMedium.copyWith(),
                     ),
                     Text(
                         PriceConverter.convertPrice(Get.context!,
                             fare != null ? double.parse(fare!) : 0),
-                        style: textRobotoMedium.copyWith(
-                            color: Theme.of(Get.context!).primaryColor))
+                        style: textRobotoMedium.copyWith())
                   ])
           ]));
     });

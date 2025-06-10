@@ -390,36 +390,10 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Future<void> switchToApp2(BuildContext context) async {
-    // Show confirmation dialog to switch to driver app
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Switch to Driver App'),
-          content: const Text(
-              'Do you want to switch to the Driver App? The app will close and you\'ll need to reopen it.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close dialog
-              },
-              child: const Text('No'),
-            ),
-            TextButton(
-              onPressed: () async {
-                // Save app state before exiting
-                final SharedPreferences prefs =
-                    await SharedPreferences.getInstance();
-                await prefs.setInt('isUserApp', 0); // 0 = driver app
+    // Save app state before exiting
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setInt('isUserApp', 0); // 0 = driver app
 
-                // Exit the app
-                exit(0);
-              },
-              child: const Text('Yes'),
-            ),
-          ],
-        );
-      },
-    );
+    AppSwitcher.switchToDriverApp(context);
   }
 }

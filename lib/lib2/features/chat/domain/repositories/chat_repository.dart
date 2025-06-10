@@ -33,8 +33,16 @@ class ChatRepository implements ChatRepositoryInterface {
   }
 
   @override
-  Future<Response> sendMessage(String message, String channelID, String tripId,
-      List<MultipartBody> file, PlatformFile? platformFile) async {
+  Future<Response> sendMessage(
+      String message,
+      String channelID,
+      String tripId,
+      List<MultipartBody> file,
+      PlatformFile? platformFile,
+      PlatformFile? voicePlatformFile) async {
+    // Use voice file as the main file if no platform file is provided
+    PlatformFile? fileToSend = voicePlatformFile ?? platformFile;
+
     return await apiClient.postMultipartDataConversation(
         AppConstants.sendMessage,
         {
@@ -44,7 +52,7 @@ class ChatRepository implements ChatRepositoryInterface {
           "_method": "put"
         },
         file,
-        otherFile: platformFile);
+        otherFile: fileToSend);
   }
 
   @override

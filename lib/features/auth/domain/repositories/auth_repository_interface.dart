@@ -1,10 +1,10 @@
 import 'package:ride_sharing_user_app/features/auth/domain/models/sign_up_body.dart';
 import 'package:ride_sharing_user_app/interface/repository_interface.dart';
 
-abstract class AuthRepositoryInterface implements RepositoryInterface{
-
+abstract class AuthRepositoryInterface implements RepositoryInterface {
   Future<dynamic> login({required String phone, required String password});
-  Future<dynamic> externalLogin({required String phone, required String password});
+  Future<dynamic> externalLogin(
+      {required String phone, required String password});
   Future<dynamic> logOut();
   Future<dynamic> registration({required SignUpBody signUpBody});
   Future<dynamic> sendOtp({required String phone});
@@ -12,7 +12,8 @@ abstract class AuthRepositoryInterface implements RepositoryInterface{
   Future<dynamic> verifyOtp({required String phone, required String otp});
   Future<dynamic> otpLogin({required String phone, required String otp});
   Future<dynamic> resetPassword(String phoneOrEmail, String password);
-  Future<dynamic> verifyFirebaseOtp({required String phone, required String otp, required String session});
+  Future<dynamic> verifyFirebaseOtp(
+      {required String phone, required String otp, required String session});
   Future<dynamic> changePassword(String oldPassword, String password);
   Future<dynamic> updateToken();
   Future<dynamic> forgetPassword(String? phone);
@@ -24,7 +25,8 @@ abstract class AuthRepositoryInterface implements RepositoryInterface{
   String getUserToken();
   bool isLoggedIn();
   bool clearSharedData();
-  Future<void> saveUserNumberAndPassword(String code, String number, String password, bool externalUser);
+  Future<void> saveUserNumberAndPassword(
+      String code, String number, String password, bool externalUser);
   String getUserNumber(bool externalUser);
   String getUserPassword(bool externalUser);
   Future<bool> clearUserNumberAndPassword();
@@ -33,4 +35,5 @@ abstract class AuthRepositoryInterface implements RepositoryInterface{
   Future<void> saveRideCreatedTime(DateTime dateTime);
   Future<String> remainingTime();
   String getLoginCountryCode(bool externalUser);
+  Future<dynamic> deleteDeviceToken();
 }

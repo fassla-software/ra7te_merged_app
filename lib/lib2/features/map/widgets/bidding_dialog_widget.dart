@@ -22,6 +22,7 @@ class _BiddingDialogWidgetState extends State<BiddingDialogWidget> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimensions.paddingSizeDefault)),
       child: GetBuilder<RideController>(builder: (rideController) {
@@ -35,7 +36,6 @@ class _BiddingDialogWidgetState extends State<BiddingDialogWidget> {
                 const SizedBox(),
                 Text('start_your_bidding'.tr,
                     style: textBold.copyWith(
-                      color: Theme.of(context).primaryColor,
                       fontSize: Dimensions.fontSizeLarge,
                     )),
               ],
@@ -69,30 +69,19 @@ class _BiddingDialogWidgetState extends State<BiddingDialogWidget> {
                               child: TextFormField(
                             textAlign: TextAlign.center,
                             controller: bidingController,
-                            style: textRegular.copyWith(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .color),
+                            style: textRegular.copyWith(),
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               hintText: 'enter_your_bid'.tr,
-                              hintStyle: textRegular.copyWith(
-                                  color: Theme.of(context)
-                                      .hintColor
-                                      .withOpacity(.5)),
+                              hintStyle: textRegular.copyWith(),
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                 width: 0.0,
-                                color:
-                                    Theme.of(context).hintColor.withOpacity(0),
                               )),
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                 width: 0.0,
-                                color:
-                                    Theme.of(context).hintColor.withOpacity(0),
                               )),
                             ),
                           ))),
@@ -107,13 +96,12 @@ class _BiddingDialogWidgetState extends State<BiddingDialogWidget> {
                           }
                         },
                         child: rideController.isLoading
-                            ? SpinKitCircle(
-                                color: Theme.of(context).primaryColor,
-                                size: 40.0)
+                            ? SpinKitCircle(size: 40.0)
                             : SizedBox(
                                 width: Dimensions.iconSizeMedium,
-                                child: Image.asset(Images.arrowRight,
-                                    color: Theme.of(context).primaryColor),
+                                child: Image.asset(
+                                  Images.arrowRight,
+                                ),
                               ),
                       )
                     ]),

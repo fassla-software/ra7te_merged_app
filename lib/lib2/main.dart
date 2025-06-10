@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/lib2/features/map/controllers/map_controller.dart';
 import 'package:ride_sharing_user_app/lib2/helper/notification_helper.dart';
 import 'package:ride_sharing_user_app/lib2/util/dimensions.dart';
 import 'package:ride_sharing_user_app/lib2/util/images.dart';
@@ -22,7 +23,6 @@ import 'package:ride_sharing_user_app/lib2/theme/dark_theme.dart';
 import 'package:ride_sharing_user_app/lib2/theme/light_theme.dart';
 import 'package:ride_sharing_user_app/lib2/theme/theme_controller.dart';
 import 'package:ride_sharing_user_app/lib2/util/app_constants.dart';
-import 'features/map/controllers/map_controller.dart';
 import 'firebase_options.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -187,7 +187,7 @@ class MyApp2 extends StatelessWidget {
                                                             .color
                                                         : Theme.of(context)
                                                             .colorScheme
-                                                            .shadow)))
+                                                            .tertiaryFixed)))
                                       ]),
                                     ),
                                   ),

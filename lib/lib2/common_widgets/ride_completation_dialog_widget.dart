@@ -41,10 +41,15 @@ class RideCompletationDialogWidget extends StatelessWidget {
               const SizedBox(
                 height: Dimensions.paddingSizeSmall,
               ),
-              Text(Get.find<RiderMapController>().isInside
-                  ? 'seems_you_reached_near_your'.tr
-                  : 'seems_you_are_not_reached_near_your'.tr),
-              Text('destination'.tr),
+              Text(
+                  Get.find<RiderMapController>().isInside
+                      ? 'seems_you_reached_near_your'.tr
+                      : 'seems_you_are_not_reached_near_your'.tr,
+                  style: textMedium.copyWith(
+                      color: Theme.of(context).primaryColor)),
+              Text('destination'.tr,
+                  style: textMedium.copyWith(
+                      color: Theme.of(context).primaryColor)),
               const SizedBox(
                 height: Dimensions.paddingSizeSmall,
               ),
@@ -67,7 +72,9 @@ class RideCompletationDialogWidget extends StatelessWidget {
                           child: Text(
                         'continue'.tr,
                         style: textRegular.copyWith(
-                            color: Theme.of(context).primaryColor),
+                            color: Get.isDarkMode
+                                ? Theme.of(context).colorScheme.tertiaryFixed
+                                : Theme.of(context).primaryColor),
                       )),
                     ),
                   ),
@@ -94,7 +101,9 @@ class RideCompletationDialogWidget extends StatelessWidget {
                           child: Text(
                         'complete'.tr,
                         style: textRegular.copyWith(
-                            color: Theme.of(context).cardColor),
+                            color: Get.isDarkMode
+                                ? Theme.of(context).colorScheme.tertiaryFixed
+                                : Theme.of(context).cardColor),
                       )),
                     ),
                   )

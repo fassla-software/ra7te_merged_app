@@ -239,7 +239,9 @@ class _PaymentReceivedScreenState extends State<PaymentReceivedScreen>
                                     finalFareController.finalFare?.paidFare ??
                                         0),
                                 style: textRobotoBold.copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color: !Get.isDarkMode
+                                      ? Theme.of(context).primaryColor
+                                      : Theme.of(context).primaryColorDark,
                                   fontSize: Dimensions.fontSizeLarge,
                                 ),
                               ),
@@ -423,6 +425,9 @@ class _PaymentReceivedScreenState extends State<PaymentReceivedScreen>
                       child: SpinKitCircle(
                           color: Theme.of(context).primaryColor, size: 40.0))
                   : ButtonWidget(
+                      backgroundColor: Get.isDarkMode
+                          ? Theme.of(context).primaryColorDark
+                          : null,
                       buttonText: 'payment_received'.tr,
                       onPressed: () {
                         Get.dialog(ConfirmationDialogWidget(

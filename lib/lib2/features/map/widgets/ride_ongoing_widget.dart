@@ -76,8 +76,7 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: Dimensions.paddingSizeSmall),
                             child: Text('trip_details'.tr,
-                                style: textSemiBold.copyWith(
-                                    color: Theme.of(context).primaryColor)),
+                                style: textSemiBold.copyWith()),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(
@@ -173,8 +172,6 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                                               Row(children: [
                                                 Icon(
                                                   Icons.star_rate_rounded,
-                                                  color: Theme.of(Get.context!)
-                                                      .primaryColor,
                                                   size:
                                                       Dimensions.iconSizeMedium,
                                                 ),
@@ -239,9 +236,7 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                                 0,
                               ),
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Theme.of(context).primaryColor,
-                                    width: .25),
+                                border: Border.all(width: .25),
                                 borderRadius: BorderRadius.circular(
                                     Dimensions.paddingSizeSmall),
                               ),
@@ -293,7 +288,6 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                     Dimensions.fontSizeExtraSmall),
-                                color: Theme.of(context).primaryColor,
                               ),
                               child: Row(
                                   mainAxisAlignment:
@@ -350,9 +344,7 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                                               barrierDismissible: false);
                                         },
                                         label: Text("complete".tr,
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .primaryColor)),
+                                            style: TextStyle()),
                                         dismissThresholds: 0.5,
                                         dismissible: false,
                                         shimmer: false,
@@ -506,7 +498,6 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                             const SizedBox(height: Dimensions.paddingSizeSmall),
                             Text('your_trip_is_ongoing'.tr,
                                 style: textSemiBold.copyWith(
-                                  color: Theme.of(context).primaryColor,
                                   fontSize: Dimensions.fontSizeSmall,
                                 )),
                             const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -694,10 +685,7 @@ class _RideOngoingWidgetState extends State<RideOngoingWidget> {
                         const CustomTimePicker(),
                         const SizedBox(height: Dimensions.paddingSizeSmall),
                         rideController.isStatusUpdating
-                            ? Center(
-                                child: SpinKitCircle(
-                                    color: Theme.of(context).primaryColor,
-                                    size: 40.0))
+                            ? Center(child: SpinKitCircle(size: 40.0))
                             : ButtonWidget(
                                 onPressed: () {
                                   if (!Get.find<SplashController>()

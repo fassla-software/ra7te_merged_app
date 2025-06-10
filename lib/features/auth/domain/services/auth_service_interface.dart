@@ -1,15 +1,16 @@
 import 'package:ride_sharing_user_app/features/auth/domain/models/sign_up_body.dart';
 
-abstract class AuthServiceInterface{
-
+abstract class AuthServiceInterface {
   Future<dynamic> login({required String phone, required String password});
-  Future<dynamic> externalLogin({required String phone, required String password});
+  Future<dynamic> externalLogin(
+      {required String phone, required String password});
   Future<dynamic> logOut();
   Future<dynamic> registration({required SignUpBody signUpBody});
   Future<dynamic> sendOtp({required String phone});
   Future<dynamic> isUserRegistered({required String phone});
   Future<dynamic> verifyOtp({required String phone, required String otp});
-  Future<dynamic> verifyFirebaseOtp({required String phone, required String otp, required String session});
+  Future<dynamic> verifyFirebaseOtp(
+      {required String phone, required String otp, required String session});
   Future<dynamic> otpLogin({required String phone, required String otp});
   Future<dynamic> resetPassword(String phoneOrEmail, String password);
   Future<dynamic> changePassword(String oldPassword, String password);
@@ -23,7 +24,8 @@ abstract class AuthServiceInterface{
   String getUserToken();
   bool isLoggedIn();
   bool clearSharedData();
-  Future<void> saveUserNumberAndPassword(String code, String number, String password, bool externalUser);
+  Future<void> saveUserNumberAndPassword(
+      String code, String number, String password, bool externalUser);
   String getUserNumber(bool externalUser);
   String getUserPassword(bool externalUser);
   Future<bool> clearUserNumberAndPassword();
@@ -31,5 +33,6 @@ abstract class AuthServiceInterface{
   Future<dynamic> permanentlyDelete();
   Future<dynamic> saveRideCreatedTime(DateTime dateTime);
   Future<dynamic> remainingTime();
+  Future<dynamic> deleteDeviceToken();
   String getLoginCountryCode(bool externalUser);
 }

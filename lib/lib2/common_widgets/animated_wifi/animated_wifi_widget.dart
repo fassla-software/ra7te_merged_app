@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class WifiAnimations extends StatefulWidget {
-  const WifiAnimations({super.key, this.size = 100, this.color = Colors.grey, this.centered = false});
+  const WifiAnimations(
+      {super.key, this.size = 100, required this.color, this.centered = false});
 
   final double size;
   final bool centered;
@@ -11,7 +13,8 @@ class WifiAnimations extends StatefulWidget {
   WifiAnimationsState createState() => WifiAnimationsState();
 }
 
-class WifiAnimationsState extends State<WifiAnimations> with SingleTickerProviderStateMixin {
+class WifiAnimationsState extends State<WifiAnimations>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -25,18 +28,20 @@ class WifiAnimationsState extends State<WifiAnimations> with SingleTickerProvide
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: List.generate(6, (index) {
-                return Container(width: widget.size, height: widget.size,
-                      padding: EdgeInsets.all(index * (widget.size / 10)),
-                      child: ShapesState(
-                        controller: _controller,
-                        color: widget.color,
-                        centered: widget.centered,
-                        index: index,
-                      ));
-        }));
+    return Stack(
+        children: List.generate(6, (index) {
+      return Container(
+          width: widget.size,
+          height: widget.size,
+          padding: EdgeInsets.all(index * (widget.size / 10)),
+          child: ShapesState(
+            controller: _controller,
+            color: widget.color,
+            centered: widget.centered,
+            index: index,
+          ));
+    }));
   }
-
 
   @override
   void dispose() {
@@ -46,7 +51,13 @@ class WifiAnimationsState extends State<WifiAnimations> with SingleTickerProvide
 }
 
 class ShapesState extends AnimatedWidget {
-  const ShapesState({super.key, required this.index, required this.color, required this.centered, required AnimationController controller}) : super(listenable: controller);
+  const ShapesState(
+      {super.key,
+      required this.index,
+      required this.color,
+      required this.centered,
+      required AnimationController controller})
+      : super(listenable: controller);
 
   final int index;
   final bool centered;
@@ -73,12 +84,15 @@ class DrawShapes extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Color color = Theme.of(Get.context!).primaryColor.withOpacity(0.10);
+    Color color = Get.isDarkMode
+        ? Colors.grey
+        : Theme.of(Get.context!).primaryColor.withOpacity(0.10);
     if ((4 - index) == ((controller * 5).toInt())) {
-      color = Theme.of(Get.context!).primaryColor;
+      color =
+          Get.isDarkMode ? Colors.white : Theme.of(Get.context!).primaryColor;
     }
 
-    Paint brush =  Paint()
+    Paint brush = Paint()
       ..color = color
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
@@ -93,7 +107,16 @@ class DrawShapes extends CustomPainter {
       canvas.drawCircle(Offset(size.height / 2, size.width / 2), 5, brush);
     } else {
       brush.style = PaintingStyle.stroke;
-      canvas.drawArc(Rect.fromCenter(center: Offset(size.height / 2, size.width / 2), height: size.height, width: size.width,), startArc, endArc, false, brush);
+      canvas.drawArc(
+          Rect.fromCenter(
+            center: Offset(size.height / 2, size.width / 2),
+            height: size.height,
+            width: size.width,
+          ),
+          startArc,
+          endArc,
+          false,
+          brush);
     }
   }
 

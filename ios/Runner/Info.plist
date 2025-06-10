@@ -7,7 +7,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>UR-TURN</string>
+		<string>Rahty</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>UR-TURN</string>
+		<string>Rahty</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -50,10 +50,16 @@
 		<string>Permission required to record audio for speech recognition</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Permission required to record audio for speech recognition</string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>
 			<string>remote-notification</string>
+			<string>background-processing</string>
 		</array>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
@@ -74,7 +80,7 @@
 		<array>
 			<dict>
 				<key>CFBundleURLName</key>
-				<string>com.hwiloUser</string>
+				<string>com.rahty.fasslagroups</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>drivemond</string>
@@ -89,7 +95,7 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.googleusercontent.apps.76471554747-3nh7ctih8ihgbam4kva02gsv1gdq8ehq</string>
+					<string>com.googleusercontent.apps.724163833439-3nh7ctih8ihgbam4kva02gsv1gdq8ehq</string>
 				</array>
 			</dict>
 		</array>

@@ -22,6 +22,7 @@ import 'package:ride_sharing_user_app/lib2/util/styles.dart';
 import 'package:ride_sharing_user_app/shared/app_switcher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
+import 'package:restart_app/restart_app.dart';
 
 class ProfileMenuScreen extends StatefulWidget {
   const ProfileMenuScreen({super.key});
@@ -144,35 +145,12 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           ProfileMenuItem(
             icon: Images.profileIcon,
             title: 'switch to user app',
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Switch to User App'),
-                    content: const Text(
-                        'Do you want to switch to the User App? The app will close and you\'ll need to reopen it.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('No'),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          await prefs.setInt('isUserApp', 1);
+            onTap: () async {
+              // final SharedPreferences prefs =
+              //     await SharedPreferences.getInstance();
+              // await prefs.setInt('isUserApp', 1);
 
-                          exit(0);
-                        },
-                        child: const Text('Yes'),
-                      ),
-                    ],
-                  );
-                },
-              );
+              UserAppSwitcher.switchToUserApp(context);
             },
           ),
           ProfileMenuItem(
@@ -250,14 +228,14 @@ class ProfileMenuItem extends StatelessWidget {
               width: Dimensions.iconSizeLarge,
               child: Image.asset(icon,
                   color: Get.isDarkMode
-                      ? Theme.of(context).colorScheme.outline
+                      ? Theme.of(context).colorScheme.surface
                       : Theme.of(context).primaryColor),
             ),
             const SizedBox(width: Dimensions.paddingSizeDefault),
             Text(title.tr,
                 style: textSemiBold.copyWith(
                     color: Get.isDarkMode
-                        ? Theme.of(context).colorScheme.outline
+                        ? Theme.of(context).colorScheme.surface
                         : Theme.of(context).primaryColor,
                     fontSize: Dimensions.fontSizeLarge)),
           ]),
