@@ -177,4 +177,9 @@ class AuthService implements AuthServiceInterface {
   Future isUserRegistered({required String phone}) async {
     return await authRepositoryInterface.isUserRegistered(phone: phone);
   }
+
+  @override
+  Future<void> clearUserOrDriverAppState() async {
+    return await authRepositoryInterface.clearUserOrDriverAppState();
+  }
 }

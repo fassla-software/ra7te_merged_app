@@ -3,17 +3,17 @@ import 'package:ride_sharing_user_app/features/address/domain/models/address_mod
 import 'package:ride_sharing_user_app/features/location/domain/repositories/location_repository_interface.dart';
 import 'package:ride_sharing_user_app/features/location/domain/services/location_service_interface.dart';
 
-class LocationService implements LocationServiceInterface{
+class LocationService implements LocationServiceInterface {
   LocationRepositoryInterface locationRepositoryInterface;
   LocationService({required this.locationRepositoryInterface});
 
   @override
-  Future getAddressFromGeocode(LatLng? latLng) async{
+  Future getAddressFromGeocode(LatLng? latLng) async {
     return await locationRepositoryInterface.getAddressFromGeocode(latLng);
   }
 
   @override
-  Future getPlaceDetails(String placeID) async{
+  Future getPlaceDetails(String placeID) async {
     return await locationRepositoryInterface.getPlaceDetails(placeID);
   }
 
@@ -23,18 +23,27 @@ class LocationService implements LocationServiceInterface{
   }
 
   @override
-  Future getZone(String lat, String lng) async{
+  Future getZone(String lat, String lng) async {
     return await locationRepositoryInterface.getZone(lat, lng);
   }
 
   @override
-  Future<bool> saveUserAddress(Address? address) async{
+  Future<bool> saveUserAddress(Address? address) async {
     return await locationRepositoryInterface.saveUserAddress(address);
   }
 
   @override
-  Future searchLocation(String text) async{
+  Future searchLocation(String text) async {
     return await locationRepositoryInterface.searchLocation(text);
   }
 
+  @override
+  List<String> getLastAddressList() {
+    return locationRepositoryInterface.getLastAddressList();
+  }
+
+  @override
+  Future<void> setLastAddressList(List<String> addressList) async {
+    await locationRepositoryInterface.setLastAddressList(addressList);
+  }
 }

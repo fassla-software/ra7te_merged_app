@@ -8,11 +8,11 @@ import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/features/address/domain/models/address_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-class LocationRepository implements LocationRepositoryInterface{
+class LocationRepository implements LocationRepositoryInterface {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
-  LocationRepository({required this.apiClient, required this.sharedPreferences});
+  LocationRepository(
+      {required this.apiClient, required this.sharedPreferences});
 
   @override
   Future<Response> getZone(String lat, String lng) async {
@@ -21,38 +21,54 @@ class LocationRepository implements LocationRepositoryInterface{
 
   @override
   Future<Response> getAddressFromGeocode(LatLng? latLng) async {
-    return await apiClient.getData('${AppConstants.geoCodeURI}?lat=${latLng!.latitude}&lng=${latLng.longitude}');
+    return await apiClient.getData(
+        '${AppConstants.geoCodeURI}?lat=${latLng!.latitude}&lng=${latLng.longitude}');
   }
 
   @override
   Future<Response> searchLocation(String text) async {
-    return await apiClient.getData('${AppConstants.searchLocationUri}?search_text=${text.replaceAll('#', '')}');
+    return await apiClient.getData(
+        '${AppConstants.searchLocationUri}?search_text=${text.replaceAll('#', '')}');
   }
 
   @override
   Future<Response> getPlaceDetails(String placeID) async {
-    return await apiClient.getData('${AppConstants.placeApiDetails}?placeid=$placeID');
+    return await apiClient
+        .getData('${AppConstants.placeApiDetails}?placeid=$placeID');
   }
 
   @override
   Future<bool> saveUserAddress(Address? address) async {
     apiClient.updateHeader(
-      sharedPreferences.getString(AppConstants.token) ?? '', address,
+      sharedPreferences.getString(AppConstants.token) ?? '',
+      address,
     );
-    if(address == null) {
-      if(sharedPreferences.containsKey(AppConstants.userAddress)) {
+    if (address == null) {
+      if (sharedPreferences.containsKey(AppConstants.userAddress)) {
         return await sharedPreferences.remove(AppConstants.userAddress);
-      }else {
+      } else {
         return true;
       }
-    }else {
-      return await sharedPreferences.setString(AppConstants.userAddress, jsonEncode(address.toJson()));
+    } else {
+      return await sharedPreferences.setString(
+          AppConstants.userAddress, jsonEncode(address.toJson()));
     }
   }
 
   @override
   String? getUserAddress() {
     return sharedPreferences.getString(AppConstants.userAddress);
+  }
+
+  @override
+  List<String> getLastAddressList() {
+    return sharedPreferences.getStringList(AppConstants.lastAddressList) ?? [];
+  }
+
+  @override
+  Future<void> setLastAddressList(List<String> addressList) async {
+    await sharedPreferences.setStringList(
+        AppConstants.lastAddressList, addressList);
   }
 
   @override
@@ -84,5 +100,4 @@ class LocationRepository implements LocationRepositoryInterface{
     // TODO: implement update
     throw UnimplementedError();
   }
-
 }

@@ -23,12 +23,7 @@ import 'package:ride_sharing_user_app/features/splash/controllers/config_control
 import 'package:ride_sharing_user_app/features/support/screens/support_screen.dart';
 import 'package:ride_sharing_user_app/features/trip/screens/trip_screen.dart';
 import 'package:ride_sharing_user_app/features/wallet/screens/wallet_screen.dart';
-import 'package:ride_sharing_user_app/lib2/helper/di_container.dart' as di;
-import 'package:ride_sharing_user_app/lib2/helper/notification_helper.dart'
-    as lib2_notification;
-import 'package:ride_sharing_user_app/lib2/main.dart';
-import 'package:ride_sharing_user_app/main.dart'
-    hide flutterLocalNotificationsPlugin;
+
 import 'package:ride_sharing_user_app/util/app_constants.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';

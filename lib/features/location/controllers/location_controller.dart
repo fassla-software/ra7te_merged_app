@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,6 +18,7 @@ import 'package:ride_sharing_user_app/features/address/domain/models/address_mod
 import 'package:ride_sharing_user_app/features/map/controllers/map_controller.dart';
 import 'package:ride_sharing_user_app/features/parcel/controllers/parcel_controller.dart';
 import 'package:ride_sharing_user_app/common_widgets/confirmation_dialog_widget.dart';
+import 'package:flutter/foundation.dart';
 
 enum LocationType {
   from,
@@ -64,6 +66,7 @@ class LocationController extends GetxController implements GetxService {
   bool _loading = false;
   String _address = '';
   String _pickAddress = '';
+  List<String> _lastAddressList = [];
   List<AddressModel>? _addressList;
   bool _isLoading = false;
   bool _inZone = false;
@@ -83,6 +86,12 @@ class LocationController extends GetxController implements GetxService {
   double topPosition = 120;
   LocationType locationType = LocationType.from;
 
+  // Bottom navigation bar visibility control
+  bool _showBottomNavigationBar = false;
+  double _lastScrollPosition = 0.0;
+  ScrollController? _currentScrollController;
+  ValueNotifier<bool> bottomNavVisibility = ValueNotifier<bool>(false);
+
   List<PredictionModel> get predictionList => _predictionList;
   bool get isLoading => _isLoading;
   bool get loading => _loading;
@@ -90,11 +99,13 @@ class LocationController extends GetxController implements GetxService {
   Position get pickPosition => _pickPosition;
   String get address => _address;
   String get pickAddress => _pickAddress;
+  List<String> get lastAddressList => _lastAddressList;
   List<AddressModel>? get addressList => _addressList;
   bool get inZone => _inZone;
   String? get zoneID => _zoneID;
   bool get buttonDisabled => _buttonDisabled;
   LatLng get initialPosition => _initialPosition;
+  bool get showBottomNavigationBar => _showBottomNavigationBar;
 
   final TextEditingController locationController = TextEditingController();
   final TextEditingController entranceController = TextEditingController();
@@ -128,6 +139,8 @@ class LocationController extends GetxController implements GetxService {
   }
 
   void initTextControllers() {
+    print(
+        'LocationController: initTextControllers() called - clearing pickup location');
     locationController.clear();
     _pickAddress = '';
     pickupLocationController.text = '';
@@ -148,6 +161,8 @@ class LocationController extends GetxController implements GetxService {
   }
 
   void setPickUp(Address? address) {
+    print(
+        'LocationController: setPickUp() called with address: ${address?.address}');
     pickupLocationController.text = address?.address ?? '';
     fromAddress = address;
   }
@@ -158,9 +173,11 @@ class LocationController extends GetxController implements GetxService {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getCurrentLocation();
+    await getLastAddressList();
+    // Remove automatic getCurrentLocation call to prevent conflicts
+    // Location will be obtained manually in screens that need it
   }
 
   void setExtraRoute({bool remove = false}) {
@@ -194,6 +211,7 @@ class LocationController extends GetxController implements GetxService {
       {bool isAnimate = true,
       GoogleMapController? mapController,
       LocationType type = LocationType.from}) async {
+    print('LocationController: getCurrentLocation() called with type: $type');
     bool isSuccess = await checkPermission(() {});
     Address? addressModel;
     if (isSuccess) {
@@ -227,14 +245,13 @@ class LocationController extends GetxController implements GetxService {
           String address =
               await initAddressAddressFromGeocode(_initialPosition);
 
-          if (responseModel.isSuccess && responseModel.zoneId != null) {
-            addressModel = Address(
-              latitude: newLocalData.latitude,
-              longitude: newLocalData.longitude,
-              address: address,
-              zoneId: responseModel.zoneId,
-            );
-          }
+          addressModel = Address(
+            latitude: newLocalData.latitude,
+            longitude: newLocalData.longitude,
+            address: address,
+            zoneId: responseModel.zoneId,
+          );
+          await saveUserAddress(addressModel);
         }
 
         _locationSubscription =
@@ -261,6 +278,11 @@ class LocationController extends GetxController implements GetxService {
       update();
     }
     return addressModel;
+  }
+
+  void setPickUpAddress(Address? address) {
+    pickupLocationController.text = address?.address ?? '';
+    fromAddress = address;
   }
 
   Future<LatLng?> getCurrentPosition(
@@ -325,12 +347,24 @@ class LocationController extends GetxController implements GetxService {
     return address;
   }
 
+  Future<void> getLastAddressList() async {
+    _lastAddressList = await locationServiceInterface.getLastAddressList();
+    update();
+  }
+
+  Future<void> setLastAddressList(String lastAddress) async {
+    _lastAddressList.add(lastAddress);
+    await locationServiceInterface.setLastAddressList(_lastAddressList);
+  }
+
   Future<String> initAddressAddressFromGeocode(LatLng latLng) async {
     Response response =
         await locationServiceInterface.getAddressFromGeocode(latLng);
     if (response.statusCode == 200) {
       _address =
           response.body['data']['results'][0]['formatted_address'].toString();
+      print(
+          'LocationController: initAddressAddressFromGeocode - Setting pickup controller to: $_address');
       pickupLocationController.text = _address;
       fromAddress = Address(
           latitude: latLng.latitude,
@@ -672,5 +706,86 @@ class LocationController extends GetxController implements GetxService {
       return true;
     }
     return false;
+  }
+
+  /// Track scroll direction in draggable scroll sheet
+  void trackScrollDirection(ScrollController scrollController) {
+    // Remove previous listener if exists
+    if (_currentScrollController != null) {
+      _currentScrollController!.removeListener(_scrollListener);
+    }
+
+    _currentScrollController = scrollController;
+    scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_currentScrollController == null) return;
+
+    double currentScrollPosition = _currentScrollController!.offset;
+    double scrollDifference = currentScrollPosition - _lastScrollPosition;
+
+    // Only react to significant scroll movements to avoid jitter
+    if (scrollDifference.abs() > 5) {
+      if (scrollDifference > 0) {
+        // Scrolling up (expanding the sheet) - hide bottom nav
+        if (_showBottomNavigationBar) {
+          _showBottomNavigationBar = false;
+          update();
+        }
+      } else {
+        // Scrolling down (collapsing the sheet) - show bottom nav
+        if (!_showBottomNavigationBar) {
+          _showBottomNavigationBar = true;
+          update();
+        }
+      }
+
+      _lastScrollPosition = currentScrollPosition;
+    }
+  }
+
+  /// Manually set bottom navigation bar visibility
+  void setBottomNavigationBarVisibility(bool show) {
+    if (_showBottomNavigationBar != show) {
+      _showBottomNavigationBar = show;
+      update();
+    }
+  }
+
+  /// Track draggable sheet size changes
+  void trackDraggableSheetPosition(double currentSize) {
+    // If sheet is collapsed (size <= 0.5), hide bottom nav (more map view)
+    // If sheet is expanded (size > 0.5), show bottom nav (user is interacting with content)
+    bool shouldShowBottomNav = currentSize > 0.5;
+
+    if (_showBottomNavigationBar != shouldShowBottomNav) {
+      _showBottomNavigationBar = shouldShowBottomNav;
+      // Update ValueNotifier instead of calling update()
+      bottomNavVisibility.value = shouldShowBottomNav;
+    }
+  }
+
+  /// Setup draggable sheet listener safely
+  void setupSheetListener(DraggableScrollableController controller) {
+    controller.addListener(() {
+      if (controller.isAttached) {
+        trackDraggableSheetPosition(controller.size);
+      }
+    });
+  }
+
+  /// Initialize scroll tracking for draggable sheet
+  void initializeScrollTracking() {
+    _showBottomNavigationBar = true; // Start with bottom nav visible
+    _lastScrollPosition = 0.0;
+    bottomNavVisibility.value = true; // Initialize ValueNotifier to true
+    // Remove any existing listener
+    if (_currentScrollController != null) {
+      _currentScrollController!.removeListener(_scrollListener);
+      _currentScrollController = null;
+    }
+    // Don't call update() here to avoid setState during build
+    // State changes will be handled by ValueNotifier
   }
 }

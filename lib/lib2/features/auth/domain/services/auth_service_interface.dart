@@ -39,4 +39,5 @@ abstract class AuthServiceInterface {
   Future<dynamic> remainingTime();
   String getLoginCountryCode();
   Future<dynamic> isUserRegistered({required String phone});
+  Future<void> clearUserOrDriverAppState();
 }

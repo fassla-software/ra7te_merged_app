@@ -153,6 +153,9 @@ class AppConstants {
   static const String zoneId = 'zoneId2';
   static const String lastRefund = 'refund2';
 
+  // User or Driver App dont add 2 because it will be used in the two apps
+  static const String isUserApp = 'isUserApp';
+
   static List<LanguageModel> languages = [
     LanguageModel(
         imageUrl: Images.unitedKingdom,

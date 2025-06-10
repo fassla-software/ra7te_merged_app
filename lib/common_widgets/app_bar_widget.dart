@@ -8,6 +8,7 @@ import 'package:ride_sharing_user_app/features/dashboard/screens/dashboard_scree
 import 'package:ride_sharing_user_app/features/location/controllers/location_controller.dart';
 import 'package:ride_sharing_user_app/features/location/view/access_location_screen.dart';
 import 'package:ride_sharing_user_app/features/location/view/pick_map_screen.dart';
+import 'package:ride_sharing_user_app/features/support/screens/support_screen.dart';
 import 'package:ride_sharing_user_app/features/trip/controllers/trip_controller.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
@@ -40,6 +41,23 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(150.0),
       child: AppBar(
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: Dimensions.paddingSizeDefault),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              onPressed: () => Get.off(() => const HelpAndSupportScreen()),
+              icon: Image.asset(
+                color: Theme.of(context).primaryColorDark,
+                Images.profileHelpSupport,
+                width: Get.width * 0.05,
+              ),
+            ),
+          ),
+        ],
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

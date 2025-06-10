@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:ride_sharing_user_app/app_selecting_page.dart';
 import 'package:ride_sharing_user_app/helper/notification_helper.dart';
 import 'package:ride_sharing_user_app/helper/responsive_helper.dart';
 import 'package:ride_sharing_user_app/helper/di_container.dart' as di;
@@ -51,7 +52,18 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   // Check which app to load based on shared preference
-  int isUserApp = prefs.getInt('isUserApp') ?? 1;
+  int? isUserApp = prefs.getInt('isUserApp');
+
+  // If isUserApp is null, show selection page
+  if (isUserApp == null) {
+    print("First time launch - showing selection page");
+    // Initialize basic dependencies for the selection page
+    languages = await di.init();
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    runApp(RestartWidget(child: AppSelectionApp(languages: languages)));
+    return;
+  }
 
   // Initialize the correct dependency injection based on app mode
   if (isUserApp == 1) {

@@ -109,34 +109,50 @@ class RideController extends GetxController implements GetxService {
   String selectedCategoryId = '';
   FareModel? selectedType;
   void setRideCategoryIndex(int newIndex) {
-    rideCategoryIndex = newIndex;
-    categoryName =
-        Get.find<CategoryController>().categoryList![rideCategoryIndex].id!;
+    // Validate index bounds
+    if (Get.find<CategoryController>().categoryList == null ||
+        Get.find<CategoryController>().categoryList!.isEmpty ||
+        newIndex >= Get.find<CategoryController>().categoryList!.length) {
+      rideCategoryIndex = 0;
+    } else {
+      rideCategoryIndex = newIndex;
+    }
 
-    if (fareList.isNotEmpty) {
-      for (int i = 0; i < fareList.length; i++) {
-        if (fareList[i].vehicleCategoryId == categoryName) {
-          selectedType = fareList[i];
-          break;
+    // Ensure we have a valid category list before accessing
+    if (Get.find<CategoryController>().categoryList != null &&
+        Get.find<CategoryController>().categoryList!.isNotEmpty &&
+        rideCategoryIndex <
+            Get.find<CategoryController>().categoryList!.length) {
+      categoryName =
+          Get.find<CategoryController>().categoryList![rideCategoryIndex].id!;
+
+      if (fareList.isNotEmpty) {
+        for (int i = 0; i < fareList.length; i++) {
+          if (fareList[i].vehicleCategoryId == categoryName) {
+            selectedType = fareList[i];
+            break;
+          }
+        }
+
+        if (selectedType != null) {
+          estimatedDistance = selectedType!.estimatedDistance!;
+          estimatedDuration = selectedType!.estimatedDuration!;
+          selectedCategoryId = selectedType!.vehicleCategoryId!;
+          //
+          estimatedFare = (selectedType?.extraFareFee ?? 0) > 0
+              ? selectedType?.extraEstimatedFare ?? 0
+              : selectedType?.estimatedFare ?? 0;
+          currentFarePrice = estimatedFare;
+          actualFare = estimatedFare;
+          isCouponApplicable = selectedType!.couponApplicable!;
+          discountFare = (selectedType?.extraFareFee ?? 0) > 0
+              ? selectedType?.extraDiscountFare ?? 0
+              : selectedType?.discountFare ?? 0;
+          discountAmount = (selectedType?.extraFareFee ?? 0) > 0
+              ? selectedType?.extraDiscountAmount ?? 0
+              : selectedType?.discountAmount ?? 0;
         }
       }
-
-      estimatedDistance = selectedType!.estimatedDistance!;
-      estimatedDuration = selectedType!.estimatedDuration!;
-      selectedCategoryId = selectedType!.vehicleCategoryId!;
-      //
-      estimatedFare = (selectedType?.extraFareFee ?? 0) > 0
-          ? selectedType?.extraEstimatedFare ?? 0
-          : selectedType?.estimatedFare ?? 0;
-      currentFarePrice = estimatedFare;
-      actualFare = estimatedFare;
-      isCouponApplicable = selectedType!.couponApplicable!;
-      discountFare = (selectedType?.extraFareFee ?? 0) > 0
-          ? selectedType?.extraDiscountFare ?? 0
-          : selectedType?.discountFare ?? 0;
-      discountAmount = (selectedType?.extraFareFee ?? 0) > 0
-          ? selectedType?.extraDiscountAmount ?? 0
-          : selectedType?.discountAmount ?? 0;
     }
 
     update();
@@ -232,11 +248,17 @@ class RideController extends GetxController implements GetxService {
       } else {
         fareList = [];
         fareList.addAll(EstimatedFareModel.fromJson(response.body).data!);
-        print("${fareList[rideCategoryIndex].toJson()}");
-        setRideCategoryIndex(rideCategoryIndex != 0 ? rideCategoryIndex : 0);
-        encodedPolyLine = fareList[rideCategoryIndex].polyline??'';
-        if (encodedPolyLine != '' && encodedPolyLine.isNotEmpty) {
-          //   Get.find<MapController>().getPolyline();
+
+        // Reset rideCategoryIndex if it's out of bounds for the current fareList
+        if (fareList.isNotEmpty) {
+          int validIndex =
+              rideCategoryIndex < fareList.length ? rideCategoryIndex : 0;
+          print("${fareList[validIndex].toJson()}");
+          setRideCategoryIndex(validIndex);
+          encodedPolyLine = fareList[validIndex].polyline ?? '';
+          if (encodedPolyLine != '' && encodedPolyLine.isNotEmpty) {
+            //   Get.find<MapController>().getPolyline();
+          }
         }
       }
     } else {
@@ -307,7 +329,7 @@ class RideController extends GetxController implements GetxService {
           .paymentTypeList[Get.find<PaymentController>().paymentTypeIndex],
       encodedPolyline: parcel
           ? encodedPolyLine
-          : fareList.isNotEmpty
+          : fareList.isNotEmpty && rideCategoryIndex < fareList.length
               ? fareList[rideCategoryIndex].polyline!
               : '',
       middleAddress: [
@@ -331,7 +353,7 @@ class RideController extends GetxController implements GetxService {
           : '',
       areaId: parcel
           ? ''
-          : fareList.isNotEmpty
+          : fareList.isNotEmpty && rideCategoryIndex < fareList.length
               ? fareList[rideCategoryIndex].areaId ?? ''
               : '',
       senderName: Get.find<ParcelController>().senderNameController.text,

@@ -3,7 +3,7 @@
 <plist version="1.0">
 	<dict>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true />
+		<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
@@ -25,9 +25,9 @@
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true />
+		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true />
+		<true/>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
@@ -37,11 +37,9 @@
 		<key>NSPrivacyAccessedAPITypes</key>
 		<string>This app need location permission for tracking driver start to destination trip.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>This app needs access to location for pick location for creating a ride request,
-			Then driver can pickup you.</string>
+		<string>This app needs access to location for pick location for creating a ride request, Then driver can pickup you.</string>
 		<key>NSLocationAlwaysUsageDescription</key>
-		<string>This app needs access to location for pick location for creating a ride request,
-			Then driver can pickup you</string>
+		<string>This app needs access to location for pick location for creating a ride request, Then driver can pickup you</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app need photo gallery access for taking photo for user profile picture.</string>
 		<key>NSMicrophoneUsageDescription</key>
@@ -75,7 +73,7 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false />
+		<false/>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -87,7 +85,6 @@
 				</array>
 			</dict>
 		</array>
-
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -99,6 +96,7 @@
 				</array>
 			</dict>
 		</array>
-
+		<key>UIStatusBarHidden</key>
+		<true/>
 	</dict>
 </plist>

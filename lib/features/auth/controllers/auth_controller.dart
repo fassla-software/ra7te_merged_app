@@ -128,7 +128,7 @@ class AuthController extends GetxController implements GetxService {
       Get.back();
       Get.offAll(const SignInScreen());
       showCustomSnackBar('successfully_logout'.tr, isError: false);
-      clearSharedData();
+      await clearSharedData();
       Get.find<RideController>().clearRideDetails();
       Get.find<ParcelController>().clearParcelModel();
     } else {

@@ -737,8 +737,17 @@
   "customer_note": "ملاحظة العميل:",
   "enter_valid_contact_number": "أدخل رقم اتصال صالح",
   "female": "أنثى",
-  "male": "ذكر"
-
-
-
+  "male": "ذكر",
+  "app_mode_selection": "اختيار وضع التطبيق",
+  "choose_app_mode_subtitle": "اختر كيف تريد استخدام التطبيق",
+  "passenger_mode": "أنا راكب",
+  "passenger_subtitle": "احجز الرحلات وسافر براحة",
+  "driver_mode": "أنا سائق",
+  "driver_subtitle": "قد واكسب المال بسيارتك",
+  "preparing_experience": "جاري تحضير تجربتك...",
+  "change_later_settings": "✨ يمكنك تغيير هذا لاحقاً في إعدادات التطبيق",
+  "restarting_app": "إعادة تشغيل التطبيق",
+  "tap_to_open_app_again": "يرجى النقر هنا لفتح التطبيق مرة أخرى",
+  "error_selecting_app_mode": "خطأ في اختيار وضع التطبيق. يرجى المحاولة مرة أخرى.",
+  "add_code": "إضافة الرمز"
 }

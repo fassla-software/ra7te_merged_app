@@ -310,4 +310,9 @@ class AuthRepository implements AuthRepositoryInterface {
     return await apiClient.postData(
         AppConstants.checkRegisteredUserUri, {"phone_or_email": phone});
   }
+
+  @override
+  Future<void> clearUserOrDriverAppState() async {
+    await sharedPreferences.remove(AppConstants.isUserApp);
+  }
 }

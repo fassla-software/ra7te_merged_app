@@ -195,6 +195,7 @@ class AuthRepository implements AuthRepositoryInterface {
   @override
   bool clearSharedData() {
     sharedPreferences.remove(AppConstants.token);
+    sharedPreferences.remove(AppConstants.isUserApp);
     return true;
   }
 

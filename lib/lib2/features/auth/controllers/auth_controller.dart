@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ride_sharing_user_app/app_selecting_page.dart';
 import 'package:ride_sharing_user_app/lib2/data/api_checker.dart';
 import 'package:ride_sharing_user_app/lib2/data/api_client.dart';
 import 'package:ride_sharing_user_app/lib2/features/auth/domain/enums/verification_from_enum.dart';
@@ -12,6 +13,7 @@ import 'package:ride_sharing_user_app/lib2/features/splash/domain/models/config_
 import 'package:ride_sharing_user_app/lib2/helper/country_code_picke.dart';
 import 'package:ride_sharing_user_app/lib2/helper/display_helper.dart';
 import 'package:ride_sharing_user_app/lib2/helper/pusher_helper.dart';
+import 'package:ride_sharing_user_app/lib2/localization/localization_controller.dart';
 import 'package:ride_sharing_user_app/lib2/util/images.dart';
 import 'package:ride_sharing_user_app/lib2/features/auth/domain/models/signup_body.dart';
 import 'package:ride_sharing_user_app/lib2/features/auth/screens/sign_in_screen.dart';
@@ -24,6 +26,7 @@ import 'package:ride_sharing_user_app/lib2/features/profile/controllers/profile_
 import 'package:ride_sharing_user_app/lib2/features/ride/controllers/ride_controller.dart';
 import 'package:ride_sharing_user_app/lib2/features/splash/controllers/splash_controller.dart';
 import 'package:ride_sharing_user_app/lib2/common_widgets/snackbar_widget.dart';
+import 'package:ride_sharing_user_app/helper/di_container.dart' as userDi;
 
 class AuthController extends GetxController implements GetxService {
   final AuthServiceInterface authServiceInterface;
@@ -170,6 +173,10 @@ class AuthController extends GetxController implements GetxService {
     update();
   }
 
+  Future<void> clearUserOrDriverAppState() async {
+    await authServiceInterface.clearUserOrDriverAppState();
+  }
+
   bool logging = false;
   Future<void> logOut() async {
     logging = true;
@@ -178,8 +185,11 @@ class AuthController extends GetxController implements GetxService {
     if (response!.statusCode == 200) {
       Get.find<RideController>().updateRoute(false, notify: true);
       Get.find<ProfileController>().stopLocationRecord();
+      await clearUserOrDriverAppState();
       logging = false;
+      // final languages = await userDi.init();
       Get.back();
+      // Get.offAll(() => AppSelectionApp(languages: languages));
       Get.offAll(() => const SignInScreen());
 
       PusherHelper().pusherDisconnectPusher();

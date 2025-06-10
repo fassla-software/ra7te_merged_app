@@ -139,6 +139,10 @@ class AppConstants {
   static const String externalUserPhone = 'external_user_phone';
   static const String externalUserPassword = 'external_user_password';
   static const String externalUserCountryCode = 'external_user_countryCode';
+  static const String lastAddressList = 'last_address_list';
+
+  // User or Driver App dont add 2 because it will be used in the two apps
+  static const String isUserApp = 'isUserApp';
 
   /// Status
   static const String pending = 'pending';
@@ -176,7 +180,7 @@ class AppConstants {
         title: 'on_boarding_2_title'.tr,
         image: 'assets/image/on_board_two.png'),
     OnBoardingModel(
-        title: 'on_boarding_3_title'.tr,  
+        title: 'on_boarding_3_title'.tr,
         image: 'assets/image/on_board_three.png'),
     // OnBoardingModel(
     //     title: 'on_boarding_4_title'.tr,

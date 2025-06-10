@@ -5,6 +5,7 @@ import 'package:ride_sharing_user_app/features/dashboard/domain/models/navigatio
 import 'package:ride_sharing_user_app/features/home/screens/home_screen.dart';
 import 'package:ride_sharing_user_app/features/notification/screens/notification_screen.dart';
 import 'package:ride_sharing_user_app/features/profile/screens/profile_screen.dart';
+import 'package:ride_sharing_user_app/features/support/screens/support_screen.dart';
 import 'package:ride_sharing_user_app/features/trip/screens/trip_screen.dart';
 import 'package:ride_sharing_user_app/util/dimensions.dart';
 import 'package:ride_sharing_user_app/util/images.dart';
@@ -32,6 +33,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         activeIcon: Images.homeActive,
         inactiveIcon: Images.homeOutline,
         screen: const HomeScreen(),
+      ),
+      NavigationModel(
+        name: 'help_support'.tr,
+        activeIcon: Images.profileHelpSupport,
+        inactiveIcon: Images.profileHelpSupport,
+        screen: const HelpAndSupportScreen(),
       ),
       NavigationModel(
         name: 'activity'.tr,
@@ -152,7 +159,15 @@ class CustomMenuItem extends StatelessWidget {
                   isSelected ? activeIcon : inActiveIcon,
                   width: Dimensions.menuIconSize,
                   height: Dimensions.menuIconSize,
-                  color: Theme.of(context).buttonTheme.colorScheme!.primary,
+                  color: Theme.of(context)
+                      .buttonTheme
+                      .colorScheme!
+                      .primary
+                      .withOpacity(inActiveIcon != Images.profileHelpSupport
+                          ? 1
+                          : isSelected
+                              ? 1
+                              : 0.5),
                 ),
                 isSelected
                     ? Text(name.tr,

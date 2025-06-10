@@ -9,55 +9,243 @@ import 'package:ride_sharing_user_app/features/address/domain/models/address_mod
 import 'package:ride_sharing_user_app/features/set_destination/screens/set_destination_screen.dart';
 import 'package:ride_sharing_user_app/util/styles.dart';
 
-
-class AddressItemCard extends StatelessWidget {
+class AddressItemCard extends StatefulWidget {
   final Address address;
   const AddressItemCard({super.key, required this.address});
 
   @override
+  State<AddressItemCard> createState() => _AddressItemCardState();
+}
+
+class _AddressItemCardState extends State<AddressItemCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(
+      begin: 0.9,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(0.0, 0.6, curve: Curves.elasticOut),
+    ));
+
+    _fadeAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(0.0, 0.8, curve: Curves.easeOut),
+    ));
+
+    // Start animation with delay based on index
+    Future.delayed(Duration(milliseconds: 100 * (widget.address.id ?? 0)), () {
+      if (mounted) {
+        _animationController.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Get.find<LocationController>().getZone(address.latitude.toString(), address.longitude.toString()).then((value){
-          if(value.isSuccess){
-            Get.to(() => SetDestinationScreen(address: address));
-          }else{
-            showCustomSnackBar('service_not_available_in_this_area'.tr);
-          }
-        });
+    final isDark = Get.isDarkMode;
+    final theme = Theme.of(context);
+    final primaryGold = theme.primaryColorDark;
 
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _scaleAnimation.value,
+          child: Opacity(
+            opacity: _fadeAnimation.value,
+            child: Container(
+              width: 280,
+              height: 140,
+              margin: const EdgeInsets.only(right: 12, bottom: 4),
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+                child: InkWell(
+                  onTap: () {
+                    Get.find<LocationController>()
+                        .setDestination(widget.address);
+                  },
+                  borderRadius: BorderRadius.circular(16),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: isDark
+                            ? [
+                                Colors.white.withOpacity(0.05),
+                                Colors.white.withOpacity(0.02),
+                              ]
+                            : [
+                                Colors.white,
+                                Colors.white.withOpacity(0.95),
+                              ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isDark
+                            ? Colors.white.withOpacity(0.1)
+                            : Colors.black.withOpacity(0.06),
+                        width: 1,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: isDark
+                              ? Colors.black.withOpacity(0.3)
+                              : Colors.black.withOpacity(0.04),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Top Row - Icon and Label
+                        Row(
+                          children: [
+                            // Icon Container
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    primaryGold.withOpacity(0.15),
+                                    primaryGold.withOpacity(0.05),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: primaryGold.withOpacity(0.2),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  widget.address.addressLabel == 'home'
+                                      ? Images.homeIcon
+                                      : widget.address.addressLabel == 'office'
+                                          ? Images.workIcon
+                                          : Images.otherIcon,
+                                  height: 18,
+                                  width: 18,
+                                  color: primaryGold,
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 12),
+
+                            // Address Label
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: primaryGold.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  widget.address.addressLabel!.tr,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryGold,
+                                    letterSpacing: 0.3,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // Arrow Icon
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                color: primaryGold.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 12,
+                                color: primaryGold.withOpacity(0.8),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        // Address Text
+                        Expanded(
+                          child: Text(
+                            widget.address.address ?? '',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: isDark
+                                  ? Colors.white.withOpacity(0.8)
+                                  : const Color(0xFF374151),
+                              height: 1.3,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ),
+
+                        // Bottom indicator
+                        Container(
+                          width: double.infinity,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                primaryGold.withOpacity(0.3),
+                                primaryGold.withOpacity(0.1),
+                                Colors.transparent,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
       },
-      child: Container(width: Get.width * 0.6,
-        margin: const EdgeInsets.only(right: Dimensions.paddingSizeSmall),
-        padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSize),
-        decoration: BoxDecoration(
-          color: Get.isDarkMode ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
-          border: Border.all(
-              color: Theme.of(context).primaryColor.withOpacity(0.4),width:1,
-          ),
-          borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-        ),
-        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Image.asset(
-            address.addressLabel == 'home' ? Images.homeIcon :
-            address.addressLabel == 'office' ? Images.workIcon : Images.otherIcon,
-            color: Get.find<ThemeController>().darkTheme ?
-            Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8) :
-            Theme.of(context).hintColor,
-            height: 16,width: 16,
-          ),
-          const SizedBox(width: Dimensions.paddingSizeSmall),
-
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(address.addressLabel!.tr,style: textBold.copyWith(color: Get.isDarkMode ? Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.9) : null)),
-
-              Text(address.address ?? '',style: textRegular.copyWith(color: Get.isDarkMode ? Theme.of(context).textTheme.bodyMedium!.color!.withOpacity(0.8) : null),overflow: TextOverflow.ellipsis)
-            ],
-          )),
-
-        ]),
-      ),
     );
   }
 }
